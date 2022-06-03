@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,22 +20,32 @@ import models.Orçamento;
 public class OrçamentoForm extends JFrame implements ActionListener{
 	
 	private JPanel painel;
-	private JLabel id, fornecedor, produto, preco;
+	private JLabel id, fornecedor, produto, preco, img;
 	private JTextField tfid, tffornecedor, tfproduto, tfpreco;
 	private JTextArea vertexto;
 	private JButton adicionar, buscar, alterar, excluir;
+	private String imgIco = "./img/imgES.png";
+	private ImageIcon icon;
 	//
 	private int autoId = OrçaentoProcess.orcamentos.size() + 1;
 	private String texto = "";
+	//
+	private String[] imagens = { "./img/Estoque1.jpg", };
 	
 	OrçamentoForm(){
 		setTitle("Registro de Orçamentos");
-		setBounds(450, 200, 450, 500);
+		setBounds(450, 200, 850, 500);
+		setIconImage(new ImageIcon(imgIco).getImage());
 		painel = new JPanel();
 		painel.setBackground(new Color(199, 199, 199));
 		setContentPane(painel);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(null);
+		
+		img = new JLabel();
+		img.setBounds(565, 75, 230, 200);
+		img.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+
 		
 		id = new JLabel("*Produto");
 		id.setBounds(20, 50, 120, 30);
@@ -94,8 +105,17 @@ public class OrçamentoForm extends JFrame implements ActionListener{
 		painel.add(buscar);
 		painel.add(alterar);
 		painel.add(excluir);
+		//
+		painel.add(img);
 		
 	}
+	
+
+	private void alternarImagens(int indice) {
+		icon = new ImageIcon(new ImageIcon(img2[indice]).getImage().getScaledInstance(230, 200, 100));
+		img.setIcon(icon);
+	}
+	
 	
 	private void adicionar() {
 		
