@@ -110,12 +110,6 @@ public class OrçamentoForm extends JFrame implements ActionListener{
 		
 	}
 	
-
-	private void alternarImagens(int indice) {
-		icon = new ImageIcon(new ImageIcon(img2[indice]).getImage().getScaledInstance(230, 200, 100));
-		img.setIcon(icon);
-	}
-	
 	
 	private void adicionar() {
 		
@@ -189,19 +183,19 @@ public class OrçamentoForm extends JFrame implements ActionListener{
 		}
 		
 		if (tffornecedor.getText().length() != 0 && tfproduto.getText().length() !=0 && tfpreco.getText().length() !=0) {
-			OrçaentoProcess.orcamentos.set(indice, new Orçamento(autoId, tffornecedor.getText().toString(), tfproduto.getText().toString(),
+			OrçaentoProcess.orcamentos.set(indice, new Orçamento(Integer.parseInt(tfid.getText().toString()), tffornecedor.getText().toString(), tfproduto.getText().toString(),
 					Double.parseDouble(tfpreco.getText().toString()), false));
+			comprar();
 			listarTodos();
 			limpar();
 		}else {
 			JOptionPane.showMessageDialog(this, "Favor preencher todos os campos.");
 		}
+		OrçaentoProcess.salvar();
 		adicionar.setEnabled(true);
 		alterar.setEnabled(false);
 		excluir.setEnabled(false);
 		tfid.setText(String.format("%d", OrçaentoProcess.orcamentos.size() + 1));
-		OrçaentoProcess.salvar();
-		comprar();
 		
 	}
 	
@@ -218,12 +212,12 @@ public class OrçamentoForm extends JFrame implements ActionListener{
 		}
 		
 		OrçaentoProcess.orcamentos.remove(indice);
+		comprar();
 		listarTodos();
 		limpar();
 		adicionar.setEnabled(true);
 		alterar.setEnabled(false);
 		excluir.setEnabled(false);
-		comprar();
 		OrçaentoProcess.salvar();
 		tfid.setText(String.format("%d", OrçaentoProcess.orcamentos.size() + 1));
 	}
@@ -258,6 +252,7 @@ public class OrçamentoForm extends JFrame implements ActionListener{
 			buscar();
 		}
 		if (e.getSource() == alterar) {
+			comprar();
 			alterar();
 		}
 		if (e.getSource() == excluir) {
